@@ -1,0 +1,22 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: ;
+
+  align-items: ;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+}
+
+.job-page {
+  display: flex;
+  flex-direction: row;
+}
+
+.job-list {
+  display: flex;
+  flex-direction: column;
+}

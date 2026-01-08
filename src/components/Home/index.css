@@ -1,0 +1,15 @@
+.home {
+  display: flex;
+  color: #ffffff;
+  flex-direction: column;
+  align-items: flex-start;
+
+  justify-content: center;
+  background-size: cover;
+
+  height: 100vh;
+
+  width: 100%;
+
+  background-image: url('https://assets.ccbp.in/frontend/react-js/home-lg-bg.png');
+}

@@ -1,0 +1,18 @@
+.list-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: ;
+}
+
+.info-2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.info-1 {
+  display: flex;
+  flex-direction: row;
+}
+.img {
+}
