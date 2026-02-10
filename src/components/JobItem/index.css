@@ -1,7 +1,7 @@
 .list-item {
   display: flex;
   flex-direction: column;
-  justify-content:;
+  justify-content: ;
 
   border-radius: 23px;
 }

@@ -12,8 +12,7 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
- padding-left: 23px; 
-
+  padding-left: 23px;
 }
 
 .profile-card {

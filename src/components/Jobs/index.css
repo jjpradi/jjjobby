@@ -1,9 +1,9 @@
 .list {
   display: flex;
   flex-direction: column;
-  justify-content:;
+  justify-content: ;
 
-  align-items:;
+  align-items: ;
 }
 
 .filters {
@@ -44,7 +44,7 @@ h1 {
   border-radius: 5px;
   display: flex;
   flex-direction: row;
-  justify-content:;
+  justify-content: ;
 
   padding: 5px;
 
