@@ -1,3 +1,21 @@
 .user-info {
-  background-color: #ffffff;
+  color: #ffffff;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
+
+  height: 30vh;
+
+  background-size: cover;
+
+  color: blue;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+ padding-left: 23px; 
+
+}
+
+.profile-card {
+  height: 40vh;
 }

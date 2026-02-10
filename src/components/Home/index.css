@@ -2,14 +2,38 @@
   display: flex;
   color: #ffffff;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 
-  justify-content: center;
+  justify-content: flex-start;
+
   background-size: cover;
 
-  height: 100vh;
+  height: 130vh;
 
   width: 100%;
 
   background-image: url('https://assets.ccbp.in/frontend/react-js/home-lg-bg.png');
+}
+
+.text-part {
+  padding-top: 27vh;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+
+  width: 44vw;
+
+  padding-left: 33px;
+  justify-content: space-around;
+
+  height: 53vh;
+}
+
+button {
+  background-color: navy;
+  color: #ffffff;
+
+  padding: 7px;
+  border-radius: 15px;
+  border: solid 3px #ffffff;
 }

@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
+import './index.css'
 
 class UserInfo extends Component {
   state = {profileDetails: {}, isLoading: true}
@@ -49,13 +50,14 @@ class UserInfo extends Component {
     const {name, profileImageUrl, shortBio} = profileDetails
 
     const {isLoading} = this.state
+
     return (
-      <div>
+      <div className="profile-card">
         {isLoading ? (
           this.renderLoader()
         ) : (
           <div className="user-info">
-            <img src={profileImageUrl} />
+            <img alt="profile" src={profileImageUrl} />
 
             <h1>{name}</h1>
 

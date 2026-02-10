@@ -1,22 +1,83 @@
 .list {
   display: flex;
   flex-direction: column;
-  justify-content: ;
+  justify-content:;
 
-  align-items: ;
+  align-items:;
 }
 
 .filters {
   display: flex;
-  flex-direction: column;
-}
 
+  flex-direction: column;
+
+  min-width: 30vw;
+
+  padding: 23px;
+}
+.no-job-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.clear-btn {
+  margin-top: 23px;
+  margin-left: 19px;
+}
+h1 {
+  font-size: 23px;
+}
 .job-page {
   display: flex;
+  height: 100%;
+  background-color: black;
+
+  color: #ffffff;
+
   flex-direction: row;
 }
+.search-box {
+  margin-top: 23px;
 
+  background-color: grey;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content:;
+
+  padding: 5px;
+
+  width: 33vw;
+
+  margin-left: 37px;
+
+  max-height: 5vh;
+
+  align-items: center;
+}
 .job-list {
   display: flex;
   flex-direction: column;
+  background-color: #0f0f0e;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 70vw;
+}
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.search-input {
+  width: 29vw;
+  height: 4vh;
+
+  color: #ffffff;
+  background-color: black;
 }

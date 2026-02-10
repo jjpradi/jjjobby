@@ -1,5 +1,10 @@
 import './index.css'
+
 import {Link} from 'react-router-dom'
+
+import {FaRegStar, FaSuitcase} from 'react-icons/fa'
+
+import {IoLocationOutline} from 'react-icons/io5'
 
 const JobItem = props => {
   const {item} = props
@@ -15,32 +20,41 @@ const JobItem = props => {
   } = item
 
   return (
-    <Link to={`/jobs/${id}`}>
+    <Link className="link-item" to={`/jobs/${id}`}>
       <li className="list-item">
-        <div className=" ">
+        <div className="job-item">
           <div className="info-1">
             {' '}
-            <img className="img" src={companyLogoUrl} />
+            <img alt="company logo" className="img" src={companyLogoUrl} />
             <div>
               <h1>{title}</h1>
 
               <p>
                 {' '}
-                <img src="" /> {rating}{' '}
+                <FaRegStar className="star-logo" size={17} /> {rating}{' '}
               </p>
             </div>
           </div>
 
           <div className="info-2">
-            <div>
-              <p>{location}</p>
-              <p>{employmentType}</p>
+            <div className="info-2-1 ">
+              <p>
+                {' '}
+                <IoLocationOutline size={15} /> {location}
+              </p>
+              <p>
+                {' '}
+                <FaSuitcase size={15} /> {employmentType}
+              </p>
             </div>
             <p>{packagePerAnnum}</p>
           </div>
 
-          <br />
-          <p>{jobDescription}</p>
+          <hr style={{color: '#ffffff'}} />
+          <div>
+            <h1>Description</h1>
+            <p>{jobDescription}</p>
+          </div>
         </div>
       </li>
     </Link>

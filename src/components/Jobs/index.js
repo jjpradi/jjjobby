@@ -43,43 +43,56 @@ const salaryRangesList = [
     label: '40 LPA and above',
   },
 ]
+
+const apiConstatnt = {
+  initial: 'LOADING',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
+
+const locationList = ['Hyderabad', 'Bangalore', 'Chennai', 'Delhi', 'Mumbai']
 class Jobs extends Component {
   state = {
+    allJobs: [],
     jobsList: [],
     profileDetails: {},
     activeSalary: '',
     activeType: [],
     searchInput: '',
-    isLoading: true,
+
+    apiStatus: apiConstatnt.initial,
+
     typeArray: [],
     salaryArray: [],
+    isLoading: true,
+
+    activeLocation: [],
   }
 
   componentDidMount() {
     this.getJobs()
   }
 
-  getJobs = async () => {
-    const jwtToken = Cookies.get('jwt_token')
-    console.log(jwtToken)
-    const options = {
-      method: 'GET',
+  failureView = () => (
+    <div>
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+        alt="failure view"
+      />
+      <h1>Oops! Something Went Wrong</h1>
 
-      headers: {Authorization: `Bearer ${jwtToken}`},
-    }
-    const {activeSalary, searchInput, activeType} = this.state
+      <button onClick={this.onRetry}>Retry</button>
+    </div>
+  )
 
-    console.log(activeType)
+  onRetry = () => {
+    this.getJobs()
+  }
 
-    const response = await fetch(
-      `https://apis.ccbp.in/jobs?minimum_package=${activeSalary}&search=${searchInput}&employment_type=${activeType}`,
-      options,
-    )
+  getFilteredData = data => {
+    console.log(data)
 
-    console.log(response)
-    const data = await response.json()
-
-    const filteredData = data.jobs.map(e => ({
+    return data.jobs.map(e => ({
       companyLogoUrl: e.company_logo_url,
       employmentType: e.employment_type,
       id: e.id,
@@ -91,12 +104,60 @@ class Jobs extends Component {
       rating: e.rating,
       title: e.title,
     }))
+  }
+
+  successData = (data, data2) => {
+    const filteredData = this.getFilteredData(data)
+
+    const filteredData2 = this.getFilteredData(data2)
 
     this.setState({
       jobsList: filteredData,
 
       isLoading: false,
+      allJobs: filteredData2,
     })
+  }
+
+  getJobs = async () => {
+    const jwtToken = Cookies.get('jwt_token')
+    console.log(jwtToken)
+    const options = {
+      method: 'GET',
+
+      headers: {Authorization: `Bearer ${jwtToken}`},
+    }
+    const {activeSalary, searchInput, activeType, activeLocation} = this.state
+
+    console.log(activeType)
+
+    const response = await fetch(
+      `https://apis.ccbp.in/jobs?minimum_package=${activeSalary}&search=${searchInput}&employment_type=${activeType}`,
+
+      options,
+    )
+
+    const response2 = await fetch('https://apis.ccbp.in/jobs', options)
+
+    const data2 = await response2.json()
+
+    console.log(response)
+
+    const data = await response.json()
+
+    console.log(data)
+
+    if (response.ok === true) {
+      this.setState({
+        apiStatus: apiConstatnt.success,
+      })
+
+      this.successData(data, data2)
+    } else {
+      this.setState({
+        apiStatus: apiConstatnt.failure,
+      })
+    }
   }
 
   onName = event => {
@@ -124,23 +185,38 @@ class Jobs extends Component {
   onClear = () => {
     this.setState(
       {
-        activeType: '',
+        activeType: [],
         activeSalary: '',
         searchInput: '',
+        typeArray: [],
+        activeLocation: '',
       },
       this.getJobs,
     )
   }
 
   onType = event => {
-    const {activeType} = this.state
+    const {activeType, typeArray} = this.state
+
     console.log(event)
-    console.log(event.target)
+    console.log(typeArray)
+    console.log(event.target.checked)
 
     if (event.target.checked) {
       this.setState(
         prevState => ({
           typeArray: [...prevState.typeArray, event.target.id],
+        }),
+        this.getFilter,
+      )
+    } else {
+      console.log(event.target.checked)
+
+      this.setState(
+        prevState => ({
+          typeArray: [
+            ...prevState.typeArray.filter(e => e !== event.target.id),
+          ],
         }),
         this.getFilter,
       )
@@ -150,11 +226,43 @@ class Jobs extends Component {
   onLocation = event => {
     console.log(event.target)
     console.log(event.target.value)
-    const {jobsList} = this.state
 
+    const {allJobs, jobsList} = this.state
+
+    console.log(allJobs)
     console.log(jobsList)
-    const filtered = jobsList.filter(e => e.location === event.target.value)
-    console.log(filtered)
+    console.log(event)
+    if (event.target.checked) {
+      this.setState(
+        prevState => ({
+          activeLocation: [...prevState.activeLocation, event.target.value],
+        }),
+        this.getFilteredView,
+      )
+    } else {
+      this.setState(
+        prevState => ({
+          activeLocation: [
+            ...prevState.activeLocation.filter(e => e !== event.target.value),
+          ],
+        }),
+        this.getFilteredView,
+      )
+    }
+  }
+
+  getFilteredView = () => {
+    const {jobsList, activeLocation, allJobs} = this.state
+    let filtered
+    console.log(activeLocation)
+    if (activeLocation.length === 0) {
+      filtered = allJobs
+    } else {
+      filtered = allJobs.filter(e => activeLocation.includes(e.location))
+    }
+    this.setState({
+      jobsList: filtered,
+    })
   }
 
   getFilter = () => {
@@ -169,26 +277,42 @@ class Jobs extends Component {
   }
 
   render() {
-    const {jobsList, searchInput, isLoading} = this.state
+    const {
+      jobsList,
+      searchInput,
+      isLoading,
+      activeLocation,
+      apiStatus,
+      activeType,
+      activeSalary,
+      typeArray,
+    } = this.state
     console.log(employmentTypesList, salaryRangesList)
 
     return (
       <div className="job-page">
         <div className="filters">
-          <UserInfo />
-
           <div>
-            <h1>Type of Employment</h1>
+            <UserInfo />
+            <hr style={{color: '#ffffff'}} />
+          </div>
+          <div>
+            <h1> Type of Employment</h1>
 
             <ul onChange={e => this.onType(e)}>
               {employmentTypesList.map(e => (
                 <li>
-                  <input id={e.employmentTypeId} type="checkbox" />
+                  <input
+                    checked={typeArray.includes(e.employmentTypeId)}
+                    id={e.employmentTypeId}
+                    type="checkbox"
+                  />
 
                   <label htmlFor={e.employmentTypeId}>{e.label}</label>
                 </li>
               ))}
             </ul>
+            <hr style={{color: '#ffffff'}} />
           </div>
 
           <div>
@@ -200,55 +324,87 @@ class Jobs extends Component {
                   <input
                     onClick={this.onSalary}
                     id={e.salaryRangeId}
-                    type="checkbox"
+                    type="radio"
+                    checked={activeSalary === e.salaryRangeId}
+                    value={e}
                   />
 
                   <label htmlFor={e.salaryRangeId}>{e.label}</label>
                 </li>
               ))}
             </ul>
+            <hr style={{color: '#ffffff'}} />
           </div>
 
           <div>
             <h1>Location</h1>
 
             <ul onChange={e => this.onLocation(e)}>
-              <input id="Hyderabad" type="radio" value="Hyderabad" />
-              <label htmlFor="Hyderabad">Hyderabad</label>
-              <input id="Bangalore" value="Bangalore" type="radio" />
-              <label value="Bangalore" htmlFor="Bangalore">
-                Bangalore
-              </label>
-              <input value="Chennai" id="Chennai" type="radio" />
-              <label htmlFor="Chennai" value="Chennai">
-                Chennai
-              </label>
-              <input value="Delhi" id="Delhi" type="radio" />
-              <label htmlFor="Delhi">Delhi</label>
-              <input id="Mumbai" value="Mumbai" type="radio" />
-              <label htmlFor="Mumbai">Mumbai</label>
+              {locationList.map(e => (
+                <li>
+                  <input
+                    onChange={this.onLocation}
+                    checked={activeLocation.includes(e)}
+                    id={e}
+                    type="checkbox"
+                    value={e}
+                  />
+                  <label name={e} htmlFor={e}>
+                    {e}
+                  </label>
+                </li>
+              ))}
             </ul>
+            <hr style={{color: '#ffffff'}} />
           </div>
 
-          <button onClick={this.onClear}>Clear All</button>
+          <div className="clear-btn">
+            <button onClick={this.onClear}>Clear All</button>
+          </div>
         </div>
 
         <div className="job-list">
-          <div>
-            <input value={searchInput} onChange={this.onName} type="search" />
-          </div>
+          <div className="search-box">
+            <input
+              className="search-input"
+              value={searchInput}
+              onChange={this.onName}
+              type="search"
+              placeholder="Search"
+            />
 
-          {isLoading ? (
-            <div data-testid="Loader" className="loader-container">
-              <Loader type="ThreeDots" color="#000000" height="54" width="76" />
-            </div>
-          ) : (
-            <ul className="list">
-              {jobsList.map(e => (
-                <JobItem item={e} />
-              ))}
-            </ul>
-          )}
+            <button data-testid="searchButton">Search</button>
+          </div>
+          <div>
+            {jobsList.length === 0 && (
+              <div className="no-job-container">
+                <img
+                  alt="no jobs"
+                  src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
+                />
+
+                <h1>No Jobs Found</h1>
+                <p>We could not find any jobs.Try other filters</p>
+              </div>
+            )}
+
+            {isLoading ? (
+              <div data-testid="Loader" className="loader-container">
+                <Loader
+                  type="ThreeDots"
+                  color="#ffffff"
+                  height="54"
+                  width="76"
+                />
+              </div>
+            ) : (
+              <ul className="list">
+                {jobsList.map(e => (
+                  <JobItem item={e} />
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       </div>
     )

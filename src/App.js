@@ -66,7 +66,7 @@ const App = () => (
         path="/jobs"
       />
 
-      <ProtectedRoute component={JobItemDetails} path="/jobs/:id" />
+      <ProtectedRoute exact component={JobItemDetails} path="/jobs/:id" />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

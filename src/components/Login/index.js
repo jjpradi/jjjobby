@@ -4,7 +4,13 @@ import Cookies from 'js-cookie'
 import {Redirect} from 'react-router-dom'
 
 class Login extends Component {
-  state = {username: '', password: '', errorMsg: ''}
+  state = {
+    username: '',
+    password: '',
+    errorMsg: '',
+    usernameError: '',
+    passwordError: '',
+  }
 
   onName = event => {
     this.setState({
@@ -60,11 +66,18 @@ class Login extends Component {
     } else {
       this.failureView(data.error_msg)
     }
+
     console.log(data)
   }
 
   render() {
-    const {username, password, errorMsg} = this.state
+    const {
+      username,
+      password,
+      errorMsg,
+      usernameError,
+      passwordError,
+    } = this.state
 
     const jwtToken = Cookies.get('jwt_token')
 
@@ -78,35 +91,44 @@ class Login extends Component {
       <div className="bg">
         <form className="form" onSubmit={this.onLogin}>
           <img
+            alt="website logo"
             className="img"
             src="https://assets.ccbp.in/frontend/react-js/logo-img.png"
           />
-          <div className="">
+          <div className="form-field">
             <label htmlFor="name">USERNAME</label>
 
             <input
               id="name"
               onChange={this.onName}
               type="text"
+              placeholder="Username"
               value={username}
+              className="in-put"
             />
+
+            <p>{usernameError}</p>
           </div>
 
-          <div className="">
+          <div className="form-field">
             <label htmlFor="password">PASSWORD</label>
             <input
+              className="in-put"
               id="password"
               onChange={this.onPassword}
               value={password}
               type="password"
+              placeholder="Password"
             />
+
+            <p>{passwordError}</p>
           </div>
 
           <button className="button" type="submit">
             Login
           </button>
 
-          {errorMsg && <p>didnt match</p>}
+          {errorMsg}
         </form>
       </div>
     )

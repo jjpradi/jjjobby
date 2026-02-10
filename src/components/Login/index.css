@@ -5,22 +5,56 @@
   align-items: center;
 
   height: 100vh;
+
+  background-color: black;
+
 }
 
 .img {
-  height: 73px;
+  height: 43px;
 }
 .form {
   display: flex;
+  border-radius: 33px;
 
   color: #ffffff;
   height: 55vh;
   padding: 33px;
-
+  width: 30vw;
   flex-direction: column;
 
   justify-content: space-around;
   align-items: center;
 
   background-color: #272727;
+}
+
+.form-field {
+  display: flex;
+  width: 70%;
+
+
+  border-radius: 23px;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.in-put {
+  height: 4vh;
+
+padding-left: 23px;
+  background-color: grey;
+  border: solid 3px grey;
+}
+
+input {
+  background-color: grey;
+}
+.button {
+  height: 4vh;
+  width: 70%;
+  border-radius: 7px;
+  background-color: navy;
+
+  color: #ffffff;
 }

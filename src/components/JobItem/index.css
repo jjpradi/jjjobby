@@ -1,13 +1,45 @@
 .list-item {
   display: flex;
   flex-direction: column;
-  justify-content: ;
-}
+  justify-content:;
 
+  border-radius: 23px;
+}
+.link-item {
+  text-decoration: none;
+}
+.info-2-1 {
+  display: flex;
+  flex-direction: row;
+  width: 15vw;
+  justify-content: space-between;
+}
+.info-1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 16vw;
+}
 .info-2 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.star-logo {
+  background-color: gold;
+}
+.job-item {
+  background-color: #262625;
+  border-radius: 23px;
+  margin-top: 35px;
+  margin: 13px;
+  margin-right: 37px;
+  padding: 37px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  height: 47vh;
+  justify-content: space-around;
 }
 
 .info-1 {

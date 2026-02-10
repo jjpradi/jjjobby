@@ -9,24 +9,44 @@
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
+  align-items: start;
 }
+.life-at-company {
+  display: flex;
+  flex-direction: row;
+}
+.life-img {
+  width: 40vw;
+  height: 35vh;
+  border-radius: 23px;
+}
+.skill-name {
+  margin-left: 12px;
+}
+
 .first {
   display: flex;
   flex-direction: column;
 }
 .skill-item {
+  margin: 23px;
+  width: 21vw;
   display: flex;
   flex-direction: row;
 }
 
 .job-details-card {
   margin: 37px;
-  background-color: #2c364c;
+  background-color: #262625;
+
   padding: 37px;
+  color: #ffffff;
+
+  border-radius: 12px;
 }
 
 .skill-set {
-  margin: 29px;
+  margin: 7px;
 }
 * {
   margin: 0px;
@@ -37,7 +57,15 @@
   flex-direction: row;
 }
 
+.similar-list {
+  margin: 37px;
+}
+
 .job-details-page {
+  border: solid 3px black;
   height: 100%;
+  margin-top: 0px;
+
+  color: #ffffff;
   background-color: #000000;
 }

@@ -1,4 +1,7 @@
 import {Component} from 'react'
+import './index.css'
+
+import {Link} from 'react-router-dom'
 
 class SimilarJobs extends Component {
   render() {
@@ -16,24 +19,27 @@ class SimilarJobs extends Component {
     } = item
 
     return (
-      <li className="">
-        <div>
-          <img src={companyLogoUrl} />
+      <Link className="link-item" to={`/jobs/${id}`}>
+        <li className="similar-job-item">
           <div>
-            <div>
-              <img src="" />
+            <h1>{title}</h1>
 
-              {rating}
+            <img alt="similar job company logo" src={companyLogoUrl} />
+            <div>
+              <div>
+                <p> rating: {rating}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div>
-          <h1>Description</h1>
+          <div>
+            <p>{location}</p>
+            <h1>Description</h1>
 
-          <p>{jobDescription}</p>
-        </div>
-      </li>
+            <p>{jobDescription}</p>
+          </div>
+        </li>
+      </Link>
     )
   }
 }
